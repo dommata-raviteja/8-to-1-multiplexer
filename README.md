@@ -1,54 +1,15 @@
-# 8-to-1-multiplexer
-Verilog  HDL code and  Testbench For 8:1 Multiplexer
-// 8:1 Multiplexer Module
-module mux8to1 (
-    input  wire [7:0] data_in,    // 8-bit input data lines
-    input  wire [2:0] sel,        // 3-bit select line
-    output wire       out        // Output line
-);
+# 8-to-1 Multiplexer in Verilog
 
-    // Select the output based on select lines
-    assign out = data_in[sel];
+This repository contains Verilog HDL code and a testbench for an 8:1 multiplexer.
 
-endmodule
+## Files
 
-`timescale 1ns / 1ps
+- `mux8to1.v` - Main Verilog module
+- `tb_mux8to1.v` - Testbench for simulation
 
-module tb_mux8to1;
+## How It Works
 
-    reg [7:0] in;      // 8 input lines
-    reg [2:0] sel;     // 3-bit select line
-    wire out;          // Output from MUX
+The multiplexer selects one of the 8 input lines (`data_in[7:0]`) based on the 3-bit select line (`sel[2:0]`).
 
-    // Instantiate the DUT (Device Under Test)
-    mux8to1 uut (
-        .in(in),
-        .sel(sel),
-        .out(out)
-    );
-
-    initial begin
-        $display("Time\tSel\tInput\t\tOut");
-        $monitor("%0dns\t%0d\t%b\t%b", $time, sel, in, out);
-
-        // Initialize input
-        in = 8'b00000000;
-
-        // Apply different inputs and select lines
-        in = 8'b10101010;  // Alternating 1s and 0s
-
-        // Test all select combinations
-        sel = 3'b000; #10;
-        sel = 3'b001; #10;
-        sel = 3'b010; #10;
-        sel = 3'b011; #10;
-        sel = 3'b100; #10;
-        sel = 3'b101; #10;
-        sel = 3'b110; #10;
-        sel = 3'b111; #10;
-
-        $finish;
-    end
-
-endmodule
-
+### Example:
+If `data_in = 8'b10101010` and `sel = 3'b010`, then output `out = data_in[2] = 1`.
